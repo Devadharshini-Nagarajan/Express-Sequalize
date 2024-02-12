@@ -9,7 +9,7 @@ const app = express();
 
 // Sync with SQL DB
 sequalize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log("Tables synced");
   })
@@ -25,16 +25,16 @@ app.use(cors());
 // routers
 app.use("/users", userRouter);
 
-
-// Error Handling
+// Custom - If api doesnt get into any of the routes specified abve it comes here
 app.use((req, res, next) => {
-  const error = new Error("Not found");
+  const error = new Error("API URL not found");
   error.status = 404;
-  next(error);
+  next(error); // frwrd this err
 });
 
+// Even if api goes inside any route, it will be triggered if anywhere error was thrown
 app.use((err, req, res, next) => {
-  res.status(res.status || 500);
+  res.status(err.status || 500);
   res.json({
     error: {
       message: err.message,

@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const checkAuth = require("../middleware/checkAuth");
 
-router.get("/", async (req, res) => {
-  try {
-    const users = await userController.getAllUsers();
-    res.status(200).json(users);
-  } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+router.get("/", checkAuth, userController.getUsers);
+
+router.post("/signup", userController.userSignup);
+
+router.post("/login", userController.userLogin);
+
+router.delete("/:userId", checkAuth, userController.deleteUserById);
 
 module.exports = router;
