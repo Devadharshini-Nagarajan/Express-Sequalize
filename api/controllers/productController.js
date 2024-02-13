@@ -11,7 +11,7 @@ const productController = {
   },
   postProduct: async (req, res, next) => {
     try {
-      const product = await productService.postProduct(req.body);
+      const product = await productService.postProduct(req.body, req.file);
       res.status(201).json({
         message: "Product created",
         product: product,

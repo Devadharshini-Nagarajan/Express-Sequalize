@@ -2,10 +2,16 @@ const express = require("express");
 const router = express.Router();
 const productController = require("../controllers/productController");
 const checkAuth = require("../middleware/checkAuth");
+const upload = require("../middleware/multer");
 
 router.get("/", productController.getProducts);
 
-router.post("/", checkAuth, productController.postProduct);
+router.post(
+  "/",
+  checkAuth,
+  upload.single("productImage"),
+  productController.postProduct
+);
 
 router.get("/:productId", productController.getProductById);
 

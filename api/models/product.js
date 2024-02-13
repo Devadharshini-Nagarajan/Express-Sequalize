@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequalize = require("../dbConnection");
+const Image = require("./image");
 
 const Product = sequalize.define(
   "PRODUCT",
@@ -17,9 +18,13 @@ const Product = sequalize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    productImage: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    imageId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: Image,
+        key: "id",
+      },
     },
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   },
@@ -27,5 +32,7 @@ const Product = sequalize.define(
     timestamps: false,
   }
 );
+
+Product.belongsTo(Image, { foreignKey: "imageId", targetKey: "id" });
 
 module.exports = Product;

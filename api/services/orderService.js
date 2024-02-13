@@ -38,7 +38,19 @@ const orderService = {
 
   getOrderById: async (id, userId) => {
     try {
-      const result = await Order.findOne({ where: { id: id } });
+      const result = await Order.findOne({
+        where: { id: id },
+        include: [
+          {
+            model: Product,
+            attributes: ["name", "price"],
+          },
+          {
+            model: User,
+            attributes: ["email", "username"],
+          },
+        ],
+      });
       if (!result) {
         throw { status: 409, message: "No order found" };
       }
