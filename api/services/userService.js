@@ -52,6 +52,7 @@ const userService = {
       {
         email: user.email,
         username: user.username,
+        id: user.id,
       },
       process.env.JWT_KEY,
       {

@@ -7,6 +7,7 @@ const User = sequalize.define(
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     username: {
       type: DataTypes.STRING,
@@ -14,7 +15,8 @@ const User = sequalize.define(
     },
     email: {
       type: DataTypes.STRING,
-      primaryKey: true,
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,

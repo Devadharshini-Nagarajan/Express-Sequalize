@@ -4,6 +4,7 @@ const cors = require("cors");
 const sequalize = require("./api/dbConnection");
 const userRouter = require("./api/routes/user");
 const productRouter = require("./api/routes/product");
+const orderRouter = require("./api/routes/order");
 
 const port = process.env.PORT || 3100;
 const app = express();
@@ -26,6 +27,7 @@ app.use(cors());
 // routers
 app.use("/users", userRouter);
 app.use("/products", productRouter);
+app.use("/orders", orderRouter);
 
 // Custom - If api doesnt get into any of the routes specified abve it comes here
 app.use((req, res, next) => {
